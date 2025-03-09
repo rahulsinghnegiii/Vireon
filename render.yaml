@@ -2,11 +2,19 @@ services:
   - type: web
     name: vireon-backend
     env: node
-    buildCommand: cd vireon-backend && npm install && npm run build
+    buildCommand: cd vireon-backend && npm install
     startCommand: cd vireon-backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        value: mongodb+srv://rahulsinghnegi25561:5Dz8lP3encjk61WP@vireondb.2hx0h.mongodb.net/?retryWrites=true&w=majority&appName=VireonDB
+      - key: JWT_SECRET
+        value: f0c29272d880e47e08db2bfaec1a59315799aca0779e335e0dc3f580e7501f38
+      - key: REDIS_ENABLED
+        value: "false"
 
   - type: web
     name: vireon-frontend
