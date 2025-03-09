@@ -22,7 +22,16 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',  // Local Vite development server
+    'http://localhost:3000',  // Alternative local development port
+    'https://vireon.vercel.app', // Production Vercel domain
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet()); // Security headers
@@ -85,6 +94,16 @@ connectDB();
 // Basic API route
 app.get("/api", (req, res) => {
   res.json({ message: "Welcome to Vireon API" });
+});
+
+// Health check endpoint
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV
+  });
 });
 
 // Routes
