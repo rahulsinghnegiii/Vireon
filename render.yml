@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: vireon-backend
+    env: node
+    buildCommand: cd vireon-backend && npm install && npm run build
+    startCommand: cd vireon-backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  - type: web
+    name: vireon-frontend
+    env: static
+    buildCommand: cd vireon-frontend && npm install && npm run build
+    staticPublishPath: ./vireon-frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html 
