@@ -28,6 +28,11 @@ app.use(morgan("dev"));
 app.use(helmet()); // Security headers
 app.use(mongoSanitize()); // Prevent NoSQL injection
 
+// Root route handler
+app.get("/", (req, res) => {
+  res.redirect("/api");
+});
+
 // Debug logging middleware
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
